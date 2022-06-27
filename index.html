@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yet Another Incremental Game</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <link href='https://fonts.googleapis.com/css?family=Anonymous Pro' rel='stylesheet'>
+    <script type="text/javascript" src="break_eternity.js"></script>
+    <script type="text/javascript" src="omeganum.js"></script>
+    <script type="text/javascript" src="options.js"></script>
+    <script type="text/javascript" src="tabs.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <center>
+        <h1>You have <span class="points">0</span> points.</h1>
+        <h4>You are getting <span class="gain">0</span> points per second.</h4>
+
+        <br><br>
+
+        <nav>
+            <button onclick="showTab('generators')">Generators</button>
+            <button onclick="showTab('autobuyers')">Autobuyers</button>
+            <button onclick="showTab('options')">Options</button>
+        </nav>
+
+        <br>
+
+        <div class="tab tab-generators">
+            <h3>Generators</h3>
+            <p>Generator boost: +<span class="current-boost">0.015</span> -> +<span class="next-boost">0.030</span> <button onclick="buyBoost()" class="btn-boost">Cost: <span class="boost-cost">1e9</span></button></p>
+            <table>
+                <tr><td>1st generators</td><td><span class="generator-1"></span></td><td><span class="multiplier-1">x1.000</span></td><td><button class="btn-generator-1" onclick="buyGenerator(1)">Cost: <span class="cost-1">0</span></button></td></tr>
+                <tr><td>2nd generators</td><td><span class="generator-2"></span></td><td><span class="multiplier-2">x1.000</span></td><td><button class="btn-generator-2" onclick="buyGenerator(2)">Cost: <span class="cost-2">0</span></button></td></tr>
+                <tr><td>3rd generators</td><td><span class="generator-3"></span></td><td><span class="multiplier-3">x1.000</span></td><td><button class="btn-generator-3" onclick="buyGenerator(3)">Cost: <span class="cost-3">0</span></button></td></tr>
+                <tr><td>4th generators</td><td><span class="generator-4"></span></td><td><span class="multiplier-4">x1.000</span></td><td><button class="btn-generator-4" onclick="buyGenerator(4)">Cost: <span class="cost-4">0</span></button></td></tr>
+                <tr><td>5th generators</td><td><span class="generator-5"></span></td><td><span class="multiplier-5">x1.000</span></td><td><button class="btn-generator-5" onclick="buyGenerator(5)">Cost: <span class="cost-5">0</span></button></td></tr>
+                <tr><td>6th generators</td><td><span class="generator-6"></span></td><td><span class="multiplier-6">x1.000</span></td><td><button class="btn-generator-6" onclick="buyGenerator(6)">Cost: <span class="cost-6">0</span></button></td></tr>
+                <tr><td>7th generators</td><td><span class="generator-7"></span></td><td><span class="multiplier-7">x1.000</span></td><td><button class="btn-generator-7" onclick="buyGenerator(7)">Cost: <span class="cost-7">0</span></button></td></tr>
+                <tr><td>8th generators</td><td><span class="generator-8"></span></td><td><span class="multiplier-8">x1.000</span></td><td><button class="btn-generator-8" onclick="buyGenerator(8)">Cost: <span class="cost-8">0</span></button></td></tr>
+            </table>
+            <br>
+            <button class="btn-sacrifice" onclick="sacrifice()">
+                Sacrifice<br>
+                <span class="current-sacrifice-bonus">1.000x</span> -> <span class="next-sacrifice-bonus">1.005x</span>
+            </button>
+            
+        </div>
+
+        <div class="tab tab-autobuyers" hidden>
+            <h3>Autobuyers</h3>
+            <p>Slow autobuyers always buy after 4 seconds.<br>Complete challenges to unlock faster autobuyers.</p>
+            <table>
+                <tr>
+                    <td>
+                        1st Generator<br>Autobuyer <span class="slow-ab-1">(slow)</span><br><br>
+                        <button class="btn-ab-1" onclick="player.autobuyers.buy('ab-1')">Cost: 1e10</button>
+                        <div class="div-ab-1" style="display:none;"><input class="chk-ab-1" type="checkbox" onchange="player.autobuyers.toggle('ab-1')"><span>Enabled</span></div>
+                    </td>
+                    <td>
+                        2nd Generator<br>Autobuyer <span class="slow-ab-2">(slow)</span><br><br>
+                        <button class="btn-ab-2" onclick="player.autobuyers.buy('ab-2')">Cost: 1e15</button>
+                        <div class="div-ab-2" style="display:none;"><input class="chk-ab-2" type="checkbox" onchange="player.autobuyers.toggle('ab-2')"><span>Enabled</span></div>
+                    </td>
+                    <td>
+                        3rd Generator<br>Autobuyer <span class="slow-ab-3">(slow)</span><br><br>
+                        <button class="btn-ab-3" onclick="player.autobuyers.buy('ab-3')">Cost: 1e20</button>
+                        <div class="div-ab-3" style="display:none;"><input class="chk-ab-3" type="checkbox" onchange="player.autobuyers.toggle('ab-3')"><span>Enabled</span></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        4th Generator<br>Autobuyer <span class="slow-ab-4">(slow)</span><br><br>
+                        <button class="btn-ab-4" onclick="player.autobuyers.buy('ab-4')">Cost: 1e10</button>
+                        <div class="div-ab-4" style="display:none;"><input class="chk-ab-4" type="checkbox" onchange="player.autobuyers.toggle('ab-4')"><span>Enabled</span></div>
+                    </td>
+                    <td>
+                        5th Generator<br>Autobuyer <span class="slow-ab-5">(slow)</span><br><br>
+                        <button class="btn-ab-5" onclick="player.autobuyers.buy('ab-5')">Cost: 1e15</button>
+                        <div class="div-ab-5" style="display:none;"><input class="chk-ab-5" type="checkbox" onchange="player.autobuyers.toggle('ab-5')"><span>Enabled</span></div>
+                    </td>
+                    <td>
+                        6th Generator<br>Autobuyer <span class="slow-ab-6">(slow)</span><br><br>
+                        <button class="btn-ab-6" onclick="player.autobuyers.buy('ab-6')">Cost: 1e20</button>
+                        <div class="div-ab-6" style="display:none;"><input class="chk-ab-6" type="checkbox" onchange="player.autobuyers.toggle('ab-6')"><span>Enabled</span></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        7th Generator<br>Autobuyer (slow)<br><br>
+                        <button>Cost: 1e40</button>
+                    </td>
+                    <td>
+                        8th Generator<br>Autobuyer (slow)<br><br>
+                        <button>Cost: 1e45</button>
+                    </td>
+                    <td>
+                        Booster<br>Autobuyer (slow)<br><br>
+                        <button>Cost: 1e50</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="tab tab-options" hidden>
+            <h3>Options</h3>
+            <table>
+                <tr>
+                    <td><button class="big" onclick="options.save()">Save</button></td>
+                    <td><button class="big" onclick="options.load()">Load</button></td>
+                    <td><button class="big" onclick="options.export()">Export to clipboard</button></td>
+                </tr>
+                <tr>
+                    <td><button class="big" onclick="options.import()">Import from clipboard</button></td>
+                    <td><button class="big opt-interval" onclick="options.setAutoSaveInterval()">Auto save interval: 10s</button></td>
+                    <td><button class="big" onclick="options.reset()">RESET</button></td>
+                </tr>
+                <tr>
+                    <td><button class="big" onclick="options.setDecimalNotation()">Notation: Scientific</button></td>
+                    <td><button class="big" onclick="options.setAutoSaveInterval()">Confirmations</button></td>
+                    <td><button class="big" onclick="options.reset()">News ticker: Shown</button></td>
+                </tr>
+                <tr>
+                    <td><button class="big" onclick="options.setDecimalNotation()">Hotkeys: ON</button></td>
+                    <td><button class="big" onclick="options.setTheme()">Theme: Dark</button></td>
+                    <td><button class="big" onclick="options.reset()">Music: Hypnothis (Kevin Macleod)</button></td>
+                </tr>
+            </table>
+
+            <br><br>
+
+            Hotkeys: None at the moment<br><br>
+            YAIG created by jasperfr.<br>
+            OmegaNum library by Naruyoko <a href="https://github.com/Naruyoko/OmegaNum.js/blob/master/OmegaNum.js">(link)</a>
+        </div>
+
+        <footer>
+            <br>
+            <div class="infinity-percentage">
+                <div class="infinity-percentage-value" style="width: 40%"></div>
+                <span class="infinity-percentage-label">40% to Infinity</span>
+            </div>
+            <br>
+            <div class="eternity-percentage">
+                <div class="eternity-percentage-value" style="width: 0%"></div>
+                <span class="eternity-percentage-label">0% to Eternity</span>
+            </div>
+        </footer>
+    </center>
+</body>
+</html>

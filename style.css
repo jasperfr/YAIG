@@ -1,0 +1,92 @@
+* {
+    font-family: 'Anonymous Pro'
+}
+
+body {
+    background-color: #000;
+    color: #fff;
+}
+
+h1, h4 {
+    margin: 0;
+}
+
+h4 {
+    color: #888;
+}
+
+table td {
+    text-align: center;
+}
+
+table span[class^="generator-"] {
+    margin-left: 20pt;
+    margin-right: 10pt;
+}
+
+table span[class^="multiplier-"] {
+    margin-left: 10pt;
+    margin-right: 20pt;
+}
+
+button {
+    width: 100pt;
+}
+
+button.big {
+    height: 40pt;
+}
+
+div.infinity-percentage, div.eternity-percentage {
+    display: block;
+    width: 75%;
+    max-width: 500px;
+    height: 25px;
+    border: 1px solid white;
+    text-align: left;
+    background: black;
+    position: relative;
+}
+
+div.infinity-percentage-value, div.eternity-percentage-value {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    display: block;
+    height: 25px;
+}
+
+div.infinity-percentage-value {
+    background: #09c;
+}
+
+div.eternity-percentage-value {
+    background: #c09;
+}
+
+span.infinity-percentage-label, span.eternity-percentage-label {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    line-height: 25px;
+    text-align: center;
+}
+
+button.cant {
+    background-color: #888;
+    border: 2px solid #888;
+    border-radius: 2px;
+}
+
+.btn-sacrifice {
+    padding: 8pt;
+    width: 120pt;
+}
+
+.tab-autobuyers td {
+    border: 1px solid white;
+    padding: 20pt;
+}
