@@ -7,22 +7,37 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <link href='https://fonts.googleapis.com/css?family=Anonymous Pro' rel='stylesheet'>
     <script type="text/javascript" src="lib/break_eternity.js"></script>
-    <script type="text/javascript" src="lib/omeganum.js"></script>
     <script type="text/javascript" src="src/options.js"></script>
     <script type="text/javascript" src="src/tabs.js"></script>
+    <script type="text/javascript" src="src/news.js"></script>
     <script type="text/javascript" src="src/app.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
     <center>
+
+        <div class="news-ticker" loop="0">
+            <span class="news-message">I need to add news messages.</span>
+        </div>
+
         <h1>You have <span class="points">0</span> points.</h1>
         <h4>You are getting <span class="gain">0</span> points per second.</h4>
 
-        <br><br>
+        <h3 class="inf">You have <span class="infinity-points">0</span> Infinity Points.</h3>
+
+        <button class="btn-gain-infinity" style="display: none;" onclick="player.infinity.onGain()">
+            <p>Gain <span class="infinity-gain">0</span> IP.</p>
+        </button>
+
+        <br>
+        <br>
 
         <nav>
             <button onclick="showTab('generators')">Generators</button>
             <button onclick="showTab('autobuyers')">Autobuyers</button>
+            <button onclick="showTab('challenges')">Challenges</button>
+            <button class="nav-infinity" onclick="showTab('infinity')">Infinity</button>
             <button onclick="showTab('options')">Options</button>
         </nav>
 
@@ -30,23 +45,43 @@
 
         <div class="tab tab-generators">
             <h3>Generators</h3>
-            <p>Generator boost: +<span class="current-boost">0.015</span> -> +<span class="next-boost">0.030</span> <button onclick="buyBoost()" class="btn-boost">Cost: <span class="boost-cost">1e9</span></button></p>
+            <p>
+                Generator boost: +<span class="current-boost">0.015</span> -> +<span class="next-boost">0.030</span> <button onclick="player.boost.onBuy()" class="btn-boost">Cost: <span class="boost-cost">1e9</span></button> <button class="max" onclick="player.boost.onBuyMax()">Max</button> <button class="max" onclick="maxAll()">Max All</button><br>
+                You have <span class="boost-count">0</span> boosts. Each boost gives a +<span class="boost-amount">1.000</span>x boost to all generators.
+            </p>
             <table>
-                <tr><td>1st generators</td><td><span class="generator-1"></span></td><td><span class="multiplier-1">x1.000</span></td><td><button class="btn-generator-1" onclick="buyGenerator(1)">Cost: <span class="cost-1">0</span></button></td></tr>
-                <tr><td>2nd generators</td><td><span class="generator-2"></span></td><td><span class="multiplier-2">x1.000</span></td><td><button class="btn-generator-2" onclick="buyGenerator(2)">Cost: <span class="cost-2">0</span></button></td></tr>
-                <tr><td>3rd generators</td><td><span class="generator-3"></span></td><td><span class="multiplier-3">x1.000</span></td><td><button class="btn-generator-3" onclick="buyGenerator(3)">Cost: <span class="cost-3">0</span></button></td></tr>
-                <tr><td>4th generators</td><td><span class="generator-4"></span></td><td><span class="multiplier-4">x1.000</span></td><td><button class="btn-generator-4" onclick="buyGenerator(4)">Cost: <span class="cost-4">0</span></button></td></tr>
-                <tr><td>5th generators</td><td><span class="generator-5"></span></td><td><span class="multiplier-5">x1.000</span></td><td><button class="btn-generator-5" onclick="buyGenerator(5)">Cost: <span class="cost-5">0</span></button></td></tr>
-                <tr><td>6th generators</td><td><span class="generator-6"></span></td><td><span class="multiplier-6">x1.000</span></td><td><button class="btn-generator-6" onclick="buyGenerator(6)">Cost: <span class="cost-6">0</span></button></td></tr>
-                <tr><td>7th generators</td><td><span class="generator-7"></span></td><td><span class="multiplier-7">x1.000</span></td><td><button class="btn-generator-7" onclick="buyGenerator(7)">Cost: <span class="cost-7">0</span></button></td></tr>
-                <tr><td>8th generators</td><td><span class="generator-8"></span></td><td><span class="multiplier-8">x1.000</span></td><td><button class="btn-generator-8" onclick="buyGenerator(8)">Cost: <span class="cost-8">0</span></button></td></tr>
+                <tr><td>1st generators</td><td><span class="generator-amount-1"></span></td><td><span class="generator-multiplier-1">x1.000</span></td><td><button class="btn-generator-1" onclick="player.generator.buyGenerator(1)">Cost: <span class="generator-cost-1">0</span></button> <button class="max" onclick="player.generator.buyMaxGenerator(1)">Max</button></td></tr>
+                <tr><td>2nd generators</td><td><span class="generator-amount-2"></span></td><td><span class="generator-multiplier-2">x1.000</span></td><td><button class="btn-generator-2" onclick="player.generator.buyGenerator(2)">Cost: <span class="generator-cost-2">0</span></button> <button class="max" onclick="player.generator.buyMaxGenerator(2)">Max</button></td></tr>
+                <tr><td>3rd generators</td><td><span class="generator-amount-3"></span></td><td><span class="generator-multiplier-3">x1.000</span></td><td><button class="btn-generator-3" onclick="player.generator.buyGenerator(3)">Cost: <span class="generator-cost-3">0</span></button> <button class="max" onclick="player.generator.buyMaxGenerator(3)">Max</button></td></tr>
+                <tr><td>4th generators</td><td><span class="generator-amount-4"></span></td><td><span class="generator-multiplier-4">x1.000</span></td><td><button class="btn-generator-4" onclick="player.generator.buyGenerator(4)">Cost: <span class="generator-cost-4">0</span></button> <button class="max" onclick="player.generator.buyMaxGenerator(4)">Max</button></td></tr>
+                <tr><td>5th generators</td><td><span class="generator-amount-5"></span></td><td><span class="generator-multiplier-5">x1.000</span></td><td><button class="btn-generator-5" onclick="player.generator.buyGenerator(5)">Cost: <span class="generator-cost-5">0</span></button> <button class="max" onclick="player.generator.buyMaxGenerator(5)">Max</button></td></tr>
+                <tr><td>6th generators</td><td><span class="generator-amount-6"></span></td><td><span class="generator-multiplier-6">x1.000</span></td><td><button class="btn-generator-6" onclick="player.generator.buyGenerator(6)">Cost: <span class="generator-cost-6">0</span></button> <button class="max" onclick="player.generator.buyMaxGenerator(6)">Max</button></td></tr>
+                <tr><td>7th generators</td><td><span class="generator-amount-7"></span></td><td><span class="generator-multiplier-7">x1.000</span></td><td><button class="btn-generator-7" onclick="player.generator.buyGenerator(7)">Cost: <span class="generator-cost-7">0</span></button> <button class="max" onclick="player.generator.buyMaxGenerator(7)">Max</button></td></tr>
+                <tr><td>8th generators</td><td><span class="generator-amount-8"></span></td><td><span class="generator-multiplier-8">x1.000</span></td><td><button class="btn-generator-8" onclick="player.generator.buyGenerator(8)">Cost: <span class="generator-cost-8">0</span></button> <button class="max" onclick="player.generator.buyMaxGenerator(8)">Max</button></td></tr>
             </table>
-            <br>
-            <button class="btn-sacrifice" onclick="sacrifice()">
-                Sacrifice<br>
-                <span class="current-sacrifice-bonus">1.000x</span> -> <span class="next-sacrifice-bonus">1.005x</span>
-            </button>
-            
+
+            <table>
+                <tr class="sacrifice">
+                    <td>Sacrifice resets all lower generators,<br>but gives a boost to 8th generators.</td>
+                    <td>
+                        <button class="btn-sacrifice" onclick="player.sacrifice.onSacrifice()">
+                            Sacrifice<br>
+                            <span class="current-sacrifice-bonus">1.000x</span> -> <span class="next-sacrifice-bonus">1.005x</span><br>
+                            (<span class="ratio-sacrifice-bonus">0.000x</span>)
+                        </button>
+                    </td>
+                </tr>
+                <tr class="prestige">
+                    <td>Prestige resets everything,<br>but multiplies all generators.</td>
+                    <td>
+                        <button class="btn-prestige" onclick="player.prestige.onPrestige()">
+                            Prestige<br>
+                            <span class="current-prestige-bonus">1.000x</span> -> <span class="next-prestige-bonus">1.005x</span><br>
+                            (<span class="ratio-prestige-bonus">0.000x</span>)
+                        </button>
+                    </td>
+                </tr>
+            </table>
         </div>
 
         <div class="tab tab-autobuyers" hidden>
@@ -89,16 +124,122 @@
                 </tr>
                 <tr>
                     <td>
-                        7th Generator<br>Autobuyer (slow)<br><br>
-                        <button>Cost: 1e40</button>
+                        7th Generator<br>Autobuyer <span class="slow-ab-7">(slow)</span><br><br>
+                        <button class="btn-ab-7" onclick="player.autobuyers.buy('ab-7')">Cost: 1e25</button>
+                        <div class="div-ab-7" style="display:none;"><input class="chk-ab-7" type="checkbox" onchange="player.autobuyers.toggle('ab-7')"><span>Enabled</span></div>
                     </td>
                     <td>
-                        8th Generator<br>Autobuyer (slow)<br><br>
-                        <button>Cost: 1e45</button>
+                        8th Generator<br>Autobuyer <span class="slow-ab-8">(slow)</span><br><br>
+                        <button class="btn-ab-8" onclick="player.autobuyers.buy('ab-8')">Cost: 1e30</button>
+                        <div class="div-ab-8" style="display:none;"><input class="chk-ab-8" type="checkbox" onchange="player.autobuyers.toggle('ab-8')"><span>Enabled</span></div>
                     </td>
                     <td>
-                        Booster<br>Autobuyer (slow)<br><br>
-                        <button>Cost: 1e50</button>
+                        Booster<br>Autobuyer <span class="slow-ab-b">(slow)</span><br><br>
+                        <button class="btn-ab-b" onclick="player.autobuyers.buy('ab-b')">Cost: 1e35</button>
+                        <div class="div-ab-b" style="display:none;"><input class="chk-ab-b" type="checkbox" onchange="player.autobuyers.toggle('ab-b')"><span>Enabled</span></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="tab tab-challenges" hidden>
+            <h3>Challenges</h3>
+            <p>
+                Complete challenges to get rewards.<br>
+                Your 0 challenge completions multiply all generators by x1.000.<br>
+                Complete all challenges to be able to break Infinity.
+            </p>
+            <table>
+                <tr>
+                    <td class="challenge challenge-1">
+                        <p>
+                            <br>Sacrifice is disabled.<br><br><br>
+                            <button>Unimplemented</button><br><br>
+                            Reward: Fast autobuyer for 1st generator
+                        </p>
+                    </td>
+                    <td class="challenge challenge-2">
+                        <p>
+                            Buying a generator resets all your lower generators.<br><br>
+                            <button>Unimplemented</button><br><br>
+                            Reward: Fast autobuyer for 2nd generator
+                        </p>
+                    </td>
+                    <td class="challenge challenge-3">
+                        <p>
+                            Sacrifice will now reset everything up to that point.<br><br>
+                            <button>Unimplemented</button><br><br>
+                            Reward: Fast autobuyer for 3nd generator
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="challenge challenge-4">
+                        <p>
+                            Prestige is disabled, but sacrifice is cubed.<br><br>
+                            <button>Unimplemented</button><br><br>
+                            Reward: Fast autobuyer for 4th generator
+                        </p>
+                    </td>
+                    <td class="challenge challenge-5">
+                        <p>
+                            There's an increasing exponent which drops to 0 per purchase.<br><br>
+                            <button>Unimplemented</button><br><br>
+                            Reward: Fast autobuyer for 5th generator
+                        </p>
+                    </td>
+                    <td class="challenge challenge-6">
+                        <p>
+                            There are only 6 generators. Prestige power is squared.<br><br>
+                            <button>Unimplemented</button><br><br>
+                            Reward: Fast autobuyer for 6th generator
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="challenge challenge-7">
+                        <p>
+                            Prestige only affects the first 4 generators.<br><br>
+                            <button>Unimplemented</button><br><br>
+                            Reward: Fast autobuyer for 7th generator
+                        </p>
+                    </td>
+                    <td class="challenge challenge-8">
+                        <p>
+                            The more prestiges you do, the worse they get.<br><br>
+                            <button>Unimplemented</button><br><br>
+                            Reward: Fast autobuyer for 8th generator
+                        </p>
+                    </td>
+                    <td class="challenge challenge-9">
+                        <p>
+                            Generator booster power is square rooted.<br><br>
+                            <button>Unimplemented</button><br><br>
+                            Reward: Fast autobuyer for generator boosters
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="challenge challenge-10">
+                        <p>
+                            There's raising Stniop. If it reaches infinity, you lose.<br><br>
+                            <button>Unimplemented</button><br><br>
+                            Reward: Autobuyer for sacrifice
+                        </p>
+                    </td>
+                    <td class="challenge challenge-11">
+                        <p>
+                            The last bought generator is multiplied by x0.005.<br><br>
+                            <button>Unimplemented</button><br><br>
+                            Reward: Autobuyer for prestige
+                        </p>
+                    </td>
+                    <td class="challenge challenge-12">
+                        <p>
+                            the Infinity Layer's generators are disabled.<br><br>
+                            <button>Unimplemented</button><br><br>
+                            Reward: Infinity autobuyer
+                        </p>
                     </td>
                 </tr>
             </table>
@@ -114,38 +255,109 @@
                 </tr>
                 <tr>
                     <td><button class="big" onclick="options.import()">Import from clipboard</button></td>
-                    <td><button class="big opt-interval" onclick="options.setAutoSaveInterval()">Auto save interval: 10s</button></td>
+                    <td><button class="big btn-interval" onclick="options.setAutoSaveInterval()">Auto save interval: 10s</button></td>
                     <td><button class="big" onclick="options.reset()">RESET</button></td>
                 </tr>
                 <tr>
-                    <td><button class="big" onclick="options.setDecimalNotation()">Notation: Scientific</button></td>
-                    <td><button class="big" onclick="options.setAutoSaveInterval()">Confirmations</button></td>
-                    <td><button class="big" onclick="options.reset()">News ticker: Shown</button></td>
+                    <td><button class="big btn-notation" onclick="options.setDecimalNotation()">Notation: Scientific</button></td>
+                    <td><button class="big btn-challenge-confirm" onclick="options.setChallengeConfirmations()">Challenge confirmations: ON</button></td>
+                    <td><button class="big btn-news" onclick="options.setNewsTickerShown()">News ticker: Shown</button></td>
                 </tr>
                 <tr>
-                    <td><button class="big" onclick="options.setDecimalNotation()">Hotkeys: ON</button></td>
-                    <td><button class="big" onclick="options.setTheme()">Theme: Dark</button></td>
-                    <td><button class="big" onclick="options.reset()">Music: Hypnothis (Kevin Macleod)</button></td>
+                    <td><button class="big btn-hotkeys" onclick="options.setHotkeys()">Hotkeys: ON</button></td>
+                    <td><button class="big btn-theme" onclick="options.setTheme()">Theme: Dark</button></td>
+                    <td><button class="big btn-music" onclick="options.setMusic()">Music: OFF</button></td>
                 </tr>
             </table>
 
             <br><br>
 
-            Hotkeys: None at the moment<br><br>
+            Hotkeys:<br>
+            M: Max All<br>
+            S: Sacrifice<br>
+            P: Prestige<br>
+            <br>
             YAIG created by jasperfr.<br>
-            OmegaNum library by Naruyoko <a href="https://github.com/Naruyoko/OmegaNum.js/blob/master/OmegaNum.js">(link)</a>
+            break_eternity.js by Patashu <a href="https://github.com/Patashu/break_eternity.js" target="_blank">(link)</a>
+            <br><br>
+            Fonts:<br>
+            'Anonymous Pro' by Google<br>
+            Licensed under the <a href="https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL">Open Font License</a><br>
+            <br>
+            Music:<br>
+            Hypnothis - Kevin MacLeod (incompetech.com)<br>
+            Licensed under <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons: By Attribution 3.0 License</a><br>
+            <br>
+            Shores of Avalon - Kevin MacLeod (incompetech.com)<br>
+            Licensed under <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons: By Attribution 4.0 License</a><br>
+            <br>
+            Impact Prelude - Kevin MacLeod (incompetech.com)<br>
+            Licensed under <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons: By Attribution 4.0 License</a><br>
+            <br>
+            Living Voyage - Kevin MacLeod (incompetech.com)<br>
+            Licensed under <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons: By Attribution 4.0 License</a><br>
+        </div>
+
+        <div class="tab tab-infinity" hidden>
+            <h3>Infinity</h3>
+            <p>
+                You have <span class="infinity-generator-power">0.000</span> Infinity Power, which boosts your Generator Boost by +<span class="infinity-generator-effect">0.000</span>x / Boost.<br>
+                You are getting <span class="infinity-generator-power-gain">0.000</span> Infinity Power / second.<br>
+                You have <span class="infinity-count">0</span> infinities, which multiply all Infinity Generators by <span class="infinity-count-multiplier">1.000x</span>.<br>
+                You will also start with <span class="free-booster-count">1</span> free Generator Booster(s). (√infinities)<br>
+                Boost per buying one Infinity Generator: <span class="infg-boost-amount">1.025x</span>
+            </p>
+            <p>
+                Sacrifice boost: <span class="sacrifice-boost-amount">^1.000</span> -> <span class="sacrifice-boost-amount-next">^1.125</span> <button class="sacrifice-boost-button" onclick="player.infinity.sacrificeBoost.buy()">Cost: 4</button> <button onclick="player.infinity.sacrificeBoost.buyMax()" class="max">Max</button><br>
+                Boost per Inf.G: <span class="infg-boost-amount">1.025x</span> -> <span class="infg-boost-amount-next">1.275x</span> <button class="infg-boost-button" onclick="player.infinity.boostPerInfG.buy()">Cost: 4</button> <button onclick="player.infinity.boostPerInfG.buyMax()" class="max">Max</button>
+            </p>
+            <table>
+                <tr><td>1st Infinity Generators</td><td><span class="infinity-generator-amount-1">0.000</span></td><td><span class="infinity-generator-multiplier-1">x1.000</span></td><td><button class="btn-infinity-generator-1" onclick="player.infinity.buyGenerator(1)">Cost: <span class="infinity-generator-cost-1">0</span></button> <button class="max" onclick="player.infinity.buyMaxGenerator(1)">Max</button></td></tr>
+                <tr><td>2nd Infinity Generators</td><td><span class="infinity-generator-amount-2">0.000</span></td><td><span class="infinity-generator-multiplier-2">x1.000</span></td><td><button class="btn-infinity-generator-2" onclick="player.infinity.buyGenerator(2)">Cost: <span class="infinity-generator-cost-2">0</span></button> <button class="max" onclick="player.infinity.buyMaxGenerator(2)">Max</button></td></tr>
+                <tr><td>3rd Infinity Generators</td><td><span class="infinity-generator-amount-3">0.000</span></td><td><span class="infinity-generator-multiplier-3">x1.000</span></td><td><button class="btn-infinity-generator-3" onclick="player.infinity.buyGenerator(3)">Cost: <span class="infinity-generator-cost-3">0</span></button> <button class="max" onclick="player.infinity.buyMaxGenerator(3)">Max</button></td></tr>
+                <tr><td>4th Infinity Generators</td><td><span class="infinity-generator-amount-4">0.000</span></td><td><span class="infinity-generator-multiplier-4">x1.000</span></td><td><button class="btn-infinity-generator-4" onclick="player.infinity.buyGenerator(4)">Cost: <span class="infinity-generator-cost-4">0</span></button> <button class="max" onclick="player.infinity.buyMaxGenerator(4)">Max</button></td></tr>
+                <tr><td>5th Infinity Generators</td><td><span class="infinity-generator-amount-5">0.000</span></td><td><span class="infinity-generator-multiplier-5">x1.000</span></td><td><button class="btn-infinity-generator-5" onclick="player.infinity.buyGenerator(5)">Cost: <span class="infinity-generator-cost-5">0</span></button> <button class="max" onclick="player.infinity.buyMaxGenerator(5)">Max</button></td></tr>
+                <tr><td>6th Infinity Generators</td><td><span class="infinity-generator-amount-6">0.000</span></td><td><span class="infinity-generator-multiplier-6">x1.000</span></td><td><button class="btn-infinity-generator-6" onclick="player.infinity.buyGenerator(6)">Cost: <span class="infinity-generator-cost-6">0</span></button> <button class="max" onclick="player.infinity.buyMaxGenerator(6)">Max</button></td></tr>
+                <tr><td>7th Infinity Generators</td><td><span class="infinity-generator-amount-7">0.000</span></td><td><span class="infinity-generator-multiplier-7">x1.000</span></td><td><button class="btn-infinity-generator-7" onclick="player.infinity.buyGenerator(7)">Cost: <span class="infinity-generator-cost-7">0</span></button> <button class="max" onclick="player.infinity.buyMaxGenerator(7)">Max</button></td></tr>
+                <tr><td>8th Infinity Generators</td><td><span class="infinity-generator-amount-8">0.000</span></td><td><span class="infinity-generator-multiplier-8">x1.000</span></td><td><button class="btn-infinity-generator-8" onclick="player.infinity.buyGenerator(8)">Cost: <span class="infinity-generator-cost-8">0</span></button> <button class="max" onclick="player.infinity.buyMaxGenerator(8)">Max</button></td></tr>
+            </table>
         </div>
 
         <footer>
             <br>
-            <div class="infinity-percentage">
-                <div class="infinity-percentage-value" style="width: 40%"></div>
-                <span class="infinity-percentage-label">40% to Infinity</span>
+            <div class="progress infinity-percentage">
+                <div class="progress-value infinity-percentage-value" style="width: 40%"></div>
+                <span class="progress-label infinity-percentage-label">40% to Infinity</span>
             </div>
             <br>
-            <div class="eternity-percentage">
-                <div class="eternity-percentage-value" style="width: 0%"></div>
-                <span class="eternity-percentage-label">0% to Eternity</span>
+            <div class="progress eternity-percentage">
+                <div class="progress-value eternity-percentage-value" style="width: 0%"></div>
+                <span class="progress-label eternity-percentage-label">0% to Eternity</span>
+            </div>
+            <br>
+            <div class="progress reality-percentage" style="display:none;">
+                <div class="progress-value reality-percentage-value" style="width: 0%"></div>
+                <span class="progress-label reality-percentage-label">0% to Reality</span>
+            </div>
+            <br>
+            <div class="progress insanity-percentage"  style="display:none;">
+                <div class="progress-value insanity-percentage-value" style="width: 0%"></div>
+                <span class="progress-label insanity-percentage-label">0% to Fatality</span>
+            </div>
+            <br>
+            <div class="progress insanity-percentage"  style="display:none;">
+                <div class="progress-value insanity-percentage-value" style="width: 0%"></div>
+                <span class="progress-label insanity-percentage-label">0% to Insanity</span>
+            </div>
+            <br>
+            <div class="progress insanity-percentage"  style="display:none;">
+                <div class="progress-value insanity-percentage-value" style="width: 0%"></div>
+                <span class="progress-label insanity-percentage-label">0% to Divinity</span>
+            </div>
+            <br>
+            <div class="progress insanity-percentage"  style="display:none;">
+                <div class="progress-value insanity-percentage-value" style="width: 0%"></div>
+                <span class="progress-label insanity-percentage-label">0% to Finality</span>
             </div>
         </footer>
     </center>

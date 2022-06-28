@@ -1,10 +1,17 @@
+:root {
+    --bg-color: #000;
+    --text-color: #eee;
+    --infinity-color: #09c;
+}
+
 * {
     font-family: 'Anonymous Pro'
 }
 
 body {
-    background-color: #000;
-    color: #fff;
+    margin: 20pt 10%;
+    background-color: var(--bg-color);
+    color: var(--text-color);
 }
 
 h1, h4 {
@@ -19,17 +26,31 @@ table td {
     text-align: center;
 }
 
-table span[class^="generator-"] {
+table span[class^="generator-amount-"], table span[class^="infinity-generator-amount-"] {
     margin-left: 20pt;
     margin-right: 10pt;
 }
 
-table span[class^="multiplier-"] {
+table span[class^="generator-multiplier-"], table span[class^="infinity-generator-multiplier-"] {
     margin-left: 10pt;
     margin-right: 20pt;
 }
 
 button {
+    cursor: pointer;
+    margin: 0em;
+    padding: 1px 6px;
+    border-width: 1.5px;
+    border-style: solid;
+    border-radius: 2px;
+    border-color: var(--text-color);
+}
+
+button:hover {
+    background-color: #ccc;
+}
+
+button:not(button.max) {
     width: 100pt;
 }
 
@@ -37,18 +58,30 @@ button.big {
     height: 40pt;
 }
 
-div.infinity-percentage, div.eternity-percentage {
+div.progress, div.news-ticker {
     display: block;
     width: 75%;
     max-width: 500px;
     height: 25px;
-    border: 1px solid white;
     text-align: left;
-    background: black;
     position: relative;
+    background: var(--bg-color);
+    border: 1px solid var(--text-color);
 }
 
-div.infinity-percentage-value, div.eternity-percentage-value {
+div.news-ticker {
+    max-width: 600px;
+    margin-bottom: 20pt;
+    line-height: 25px;
+    overflow: hidden;
+}
+
+div.news-ticker span {
+    display: block;
+    text-align: center;
+}
+
+div.progress-value {
     position: absolute;
     left: 0;
     top: 0;
@@ -58,14 +91,14 @@ div.infinity-percentage-value, div.eternity-percentage-value {
 }
 
 div.infinity-percentage-value {
-    background: #09c;
+    background: var(--infinity-color);
 }
 
 div.eternity-percentage-value {
     background: #c09;
 }
 
-span.infinity-percentage-label, span.eternity-percentage-label {
+span.progress-label {
     position: absolute;
     left: 0;
     top: 0;
@@ -76,17 +109,45 @@ span.infinity-percentage-label, span.eternity-percentage-label {
 }
 
 button.cant {
+    cursor: not-allowed;
     background-color: #888;
-    border: 2px solid #888;
-    border-radius: 2px;
+    border-color: #888;
 }
 
-.btn-sacrifice {
+.btn-sacrifice, .btn-prestige {
     padding: 8pt;
-    width: 120pt;
+    width: 160pt !important;
 }
 
 .tab-autobuyers td {
-    border: 1px solid white;
+    border: 1px solid var(--text-color);
     padding: 20pt;
+}
+
+button.btn-gain-infinity {
+    margin: 20pt 0 10pt 0;
+    width: 200pt !important;
+    background-color: var(--infinity-color);
+    color: var(--text-color);
+    border-radius: 2pt;
+    border: 2px solid var(--text-color);
+}
+
+button.nav-infinity {
+    background-color: var(--infinity-color);
+    color: var(--text-color);
+    border-color: var(--text-color);
+}
+
+.inf {
+    color: var(--infinity-color);
+}
+
+td.challenge {
+    display: inline-block;
+    width: 150pt;
+    height: 120pt;
+    padding: 0pt 10pt;
+    margin: 4pt;
+    border: 1px solid var(--text-color);
 }
